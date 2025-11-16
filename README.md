@@ -237,7 +237,124 @@ Response:
 }
 ```
 
-### 5. Get Supported Exchanges
+### 5. Advanced Header Analysis (v3 Classifier)
+
+Analyze headers with actual row data for enhanced accuracy:
+
+```bash
+curl -X POST http://localhost:3000/api/analyze-headers-advanced \
+  -H "Content-Type: application/json" \
+  -d '{
+    "headers": ["Date", "From Amount", "From Currency", "To Amount", "To Currency"],
+    "samples": [
+      ["2024-01-15", "1000", "USDT", "0.05", "BTC"],
+      ["2024-01-16", "2000", "USDT", "0.1", "BTC"]
+    ]
+  }'
+```
+
+Response:
+```json
+{
+  "success": true,
+  "data": {
+    "classifications": [
+      {
+        "column": "Date",
+        "type": "timestamp",
+        "confidence": 1.0,
+        "dataTypeMatch": "timestamp",
+        "methodsUsed": ["header_match", "data_type_match"]
+      },
+      {
+        "column": "From Amount",
+        "type": "from_amount",
+        "confidence": 0.95,
+        "dataTypeMatch": "number",
+        "methodsUsed": ["header_match", "data_type_match"]
+      },
+      {
+        "column": "From Currency",
+        "type": "from_currency",
+        "confidence": 0.98,
+        "dataTypeMatch": "currency",
+        "methodsUsed": ["header_match", "data_type_match", "dependency_boost"]
+      }
+    ],
+    "detectedExchange": "unknown",
+    "confidence": 0.98,
+    "summary": "Analyzed 5 columns with data samples. Identified 5 columns with 98% average confidence. Analysis methods: header_match, data_type_match, dependency_boost",
+    "methodsDistribution": {
+      "header_match": 5,
+      "data_type_match": 5,
+      "dependency_boost": 2
+    }
+  }
+}
+```
+
+### 6. Infer Transaction Type
+
+Determine transaction type from transaction details:
+
+```bash
+curl -X POST http://localhost:3000/api/infer-transaction-type \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fromCurrency": "USDT",
+    "toCurrency": "BTC",
+    "fromAmount": 1000,
+    "toAmount": 0.05,
+    "description": "Bought Bitcoin"
+  }'
+```
+
+Response:
+```json
+{
+  "success": true,
+  "data": {
+    "transactionType": "buy",
+    "confidence": 0.95,
+    "reasoning": "Type field: buy; Currency conversion detected; Amount pattern: buy; Description hint: buy"
+  }
+}
+```
+
+### 7. Get Classifier Statistics
+
+Check classifier capabilities and performance:
+
+```bash
+curl http://localhost:3000/api/classifier-stats
+```
+
+Response:
+```json
+{
+  "success": true,
+  "data": {
+    "classifier": "Advanced v3",
+    "capabilities": [
+      "context-aware classification",
+      "data type inference",
+      "cross-column dependency analysis",
+      "weighted exchange detection",
+      "transaction type inference"
+    ],
+    "performance": {
+      "cacheSize": 45,
+      "analysisCacheSize": 12
+    },
+    "supportedPatterns": {
+      "patternsLoaded": 12,
+      "exchangesSupported": 80
+    }
+  }
+}
+```
+
+### 8. Get Supported Exchanges
 
 List all officially supported exchange formats:
 
@@ -320,21 +437,36 @@ Date,Type,From Wallet ID,From Amount,From Currency,To Wallet ID,To Amount,To Cur
 
 ## How The AI Works
 
-The system uses a **pattern-matching classifier** that:
+### Classifier v3 (Advanced - Default)
 
-1. **Analyzes column headers** - Compares against known patterns from 9+ exchanges
-2. **Calculates similarity scores** - Uses Levenshtein distance for fuzzy matching
-3. **Detects exchange type** - Identifies which exchange the CSV comes from
-4. **Maps columns automatically** - Creates mapping from original columns to standard format
-5. **Normalizes values** - Parses dates, numbers, currencies consistently
-6. **Returns confidence scores** - Shows how confident it is about each classification
+The system uses a **context-aware, multi-algorithm classifier** that:
+
+1. **Analyzes column headers** - Compares against known patterns from 80+ exchanges
+2. **Infers data types** - Detects timestamps, numbers, currencies, addresses, hashes
+3. **Analyzes actual row data** - Validates column type consistency across samples
+4. **Detects exchange type** - Uses weighted scoring for high accuracy
+5. **Analyzes cross-column dependencies** - Boosts confidence for correlated columns
+6. **Infers transaction types** - Determines buy/sell/transfer from amounts & currencies
+7. **Multi-algorithm scoring** - Combines Jaro-Winkler, Levenshtein, and pattern matching
+8. **Returns detailed reasoning** - Shows which methods contributed to each classification
+
+### Key Features
+
+- **Data Type Detection**: Automatically identifies timestamps, numbers, cryptocurrencies, blockchain addresses, and transaction hashes
+- **Context-Aware Classification**: Uses actual row data (not just headers) to refine classifications
+- **Weighted Exchange Detection**: Improved accuracy for detecting which exchange format a CSV comes from
+- **Cross-Column Analysis**: Understands relationships between columns (e.g., amount and currency pairs)
+- **Performance Optimized**: Advanced caching and lazy loading for fast processing
+- **Explainable AI**: Shows confidence scores and reasoning for each classification
 
 ### Training Data
 
 The classifier is trained on real-world exchange CSV formats stored in `training-data.json`:
-- 9 major exchanges (Binance, Kraken, Coinbase, etc.)
-- 12 column type patterns (timestamp, amount, currency, fee, etc.)
-- 12 transaction type categories (buy, sell, deposit, etc.)
+- 80+ cryptocurrency exchanges and blockchain explorers
+- 1200+ column type patterns
+- Multiple date/time formats
+- Various currency and amount representations
+- Blockchain-specific patterns (addresses, transaction hashes, block numbers)
 - No external API calls or internet required
 
 ## Example Usage

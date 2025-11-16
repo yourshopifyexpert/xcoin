@@ -1,5 +1,6 @@
 /**
- * String similarity utilities
+ * String similarity utilities with enhanced data type detection
+ * Supports header matching, data type detection, and cross-field analysis
  */
 
 /**
@@ -136,4 +137,141 @@ export function jaroWinklerSimilarity(str1: string, str2: string): number {
   }
 
   return jaro + prefixLen * 0.1 * (1 - jaro);
+}
+
+/**
+ * Data type detection utilities
+ */
+export enum DataType {
+  TIMESTAMP = 'timestamp',
+  NUMBER = 'number',
+  CURRENCY = 'currency',
+  STRING = 'string',
+  HASH = 'hash',
+  ADDRESS = 'address',
+  BOOLEAN = 'boolean',
+  UNKNOWN = 'unknown',
+}
+
+/**
+ * Detect data type of a value
+ */
+export function detectDataType(value: string): DataType {
+  if (!value || value.trim() === '') return DataType.UNKNOWN;
+
+  const trimmed = value.trim();
+  const lower = trimmed.toLowerCase();
+
+  // Timestamp patterns
+  if (
+    /^\d{4}-\d{2}-\d{2}/.test(trimmed) || // ISO date
+    /^\d{1,2}\/\d{1,2}\/\d{2,4}/.test(trimmed) || // US date
+    /^\d{10,13}$/.test(trimmed) // Unix timestamp
+  ) {
+    return DataType.TIMESTAMP;
+  }
+
+  // Hash patterns (transaction/block hashes)
+  if (/^(0x)?[a-f0-9]{64}$/.test(lower) || /^[a-f0-9]{128}$/.test(lower)) {
+    return DataType.HASH;
+  }
+
+  // Blockchain address patterns
+  if (/^0x[a-f0-9]{40}$/.test(lower) || /^[1-9A-HJ-NP-Z]{26,35}$/.test(trimmed)) {
+    return DataType.ADDRESS;
+  }
+
+  // Currency patterns
+  if (/^[A-Z]{3,}$/.test(trimmed)) {
+    return DataType.CURRENCY;
+  }
+
+  // Number patterns
+  if (/^-?\d+([.,]\d+)?([eE][+-]?\d+)?$/.test(trimmed)) {
+    return DataType.NUMBER;
+  }
+
+  // Boolean patterns
+  if (/^(true|false|yes|no|1|0)$/i.test(lower)) {
+    return DataType.BOOLEAN;
+  }
+
+  return DataType.STRING;
+}
+
+/**
+ * Analyze a column's data to infer its type
+ * Uses multiple sample values from the column
+ */
+export function inferColumnTypeFromData(samples: string[]): DataType {
+  if (samples.length === 0) return DataType.UNKNOWN;
+
+  const typeCounts: Record<DataType, number> = {
+    [DataType.TIMESTAMP]: 0,
+    [DataType.NUMBER]: 0,
+    [DataType.CURRENCY]: 0,
+    [DataType.HASH]: 0,
+    [DataType.ADDRESS]: 0,
+    [DataType.BOOLEAN]: 0,
+    [DataType.STRING]: 0,
+    [DataType.UNKNOWN]: 0,
+  };
+
+  // Analyze each sample
+  for (const sample of samples) {
+    const type = detectDataType(sample);
+    typeCounts[type]++;
+  }
+
+  // Find the most common type
+  let maxCount = 0;
+  let inferredType = DataType.STRING;
+
+  for (const [type, count] of Object.entries(typeCounts)) {
+    if (count > maxCount) {
+      maxCount = count;
+      inferredType = type as DataType;
+    }
+  }
+
+  // Need at least 50% consistency to be confident
+  return maxCount >= samples.length * 0.5 ? inferredType : DataType.STRING;
+}
+
+/**
+ * Calculate combined similarity with weighting
+ * Considers both string similarity and semantic meaning
+ */
+export function weightedSimilarity(
+  str1: string,
+  str2: string,
+  weights: { levenshtein?: number; jaroWinkler?: number; wordMatch?: number } = {}
+): number {
+  const {
+    levenshtein: levWeight = 0.3,
+    jaroWinkler: jaroWeight = 0.5,
+    wordMatch: wordWeight = 0.2,
+  } = weights;
+
+  const s1 = str1.toLowerCase().trim();
+  const s2 = str2.toLowerCase().trim();
+
+  // Exact match
+  if (s1 === s2) return 1.0;
+
+  // Calculate individual scores
+  const levScore = calculateSimilarity(s1, s2);
+  const jaroScore = jaroWinklerSimilarity(s1, s2);
+
+  // Word-based matching
+  const s1Words = s1.split(/[\s_-]/);
+  const s2Words = s2.split(/[\s_-]/);
+  const commonWords = s1Words.filter((w) => s2Words.includes(w)).length;
+  const wordScore =
+    commonWords > 0
+      ? commonWords / Math.max(s1Words.length, s2Words.length)
+      : 0;
+
+  // Weighted combination
+  return levScore * levWeight + jaroScore * jaroWeight + wordScore * wordWeight;
 }
