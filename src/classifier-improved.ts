@@ -10,8 +10,8 @@
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { calculateSimilarity, jaroWinklerSimilarity } from './utils/similarity';
-import type { ColumnType, ClassificationResult, CSVAnalysis } from './types';
+import { calculateSimilarity, jaroWinklerSimilarity } from './utils/similarity.js';
+import type { ColumnType, ClassificationResult, CSVAnalysis } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
