@@ -197,7 +197,6 @@ describe('Advanced Classifier v3', () => {
 
       const analysis = classifierV3.analyzeCSVWithContext(headers, rows);
 
-      expect(analysis.success).not.toBeDefined(); // CSVAnalysis doesn't have success
       expect(analysis.classifications.length).toBe(5);
       expect(analysis.confidence).toBeGreaterThan(0.5);
       expect(analysis.methodsDistribution).toBeDefined();

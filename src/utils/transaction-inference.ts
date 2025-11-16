@@ -175,12 +175,12 @@ export function isSwapTransaction(
  * Comprehensive transaction inference from multiple fields
  */
 export function inferTransactionTypeFromFields(
-  typeValue?: string,
-  fromCurrency?: string,
-  toCurrency?: string,
-  fromAmount?: string | number,
-  toAmount?: string | number,
-  description?: string
+  typeValue?: string | null,
+  fromCurrency?: string | null,
+  toCurrency?: string | null,
+  fromAmount?: string | number | null,
+  toAmount?: string | number | null,
+  description?: string | null
 ): { type: string; confidence: number; reasoning: string } {
   const indicators: string[] = [];
   let typeScores: Map<string, number> = new Map();
@@ -196,14 +196,14 @@ export function inferTransactionTypeFromFields(
   }
 
   // Check if it's a swap
-  const isSwap = isSwapTransaction(fromCurrency, toCurrency);
+  const isSwap = isSwapTransaction(fromCurrency || null, toCurrency || null);
   if (isSwap) {
     typeScores.set('transfer', (typeScores.get('transfer') || 0) + 0.7);
     indicators.push('Currency conversion detected');
   }
 
   // Check direction from amounts
-  const direction = inferDirectionFromAmounts(fromAmount, toAmount);
+  const direction = inferDirectionFromAmounts(fromAmount || null, toAmount || null);
   if (direction) {
     typeScores.set(direction, (typeScores.get(direction) || 0) + 0.6);
     indicators.push(`Amount pattern: ${direction}`);
