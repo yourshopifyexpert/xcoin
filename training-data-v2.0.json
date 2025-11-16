@@ -1,0 +1,462 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "exchanges_count": 25,
+    "patterns_count": 500,
+    "last_updated": "2024-11-16",
+    "description": "Comprehensive CSV format training data for 25+ crypto exchanges and platforms"
+  },
+  "column_mappings": {
+    "binance": {
+      "source": "Binance",
+      "regions": ["Global", "US"],
+      "examples": [
+        {
+          "headers": ["time", "base-asset", "quote-asset", "type", "price", "quantity", "total", "fee", "fee-currency", "trade-id"],
+          "type": "trade",
+          "description": "Binance trade history export"
+        },
+        {
+          "headers": ["Deposit Time", "Coin", "Amount", "Deposit Address", "TransactionHash", "Status"],
+          "type": "deposit",
+          "description": "Binance deposit history"
+        },
+        {
+          "headers": ["Withdraw Time", "Coin", "Amount", "Address", "TransactionHash", "Status", "Fee"],
+          "type": "withdrawal",
+          "description": "Binance withdrawal history"
+        }
+      ]
+    },
+    "kraken": {
+      "source": "Kraken",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["txid", "refid", "time", "type", "subtype", "aclass", "asset", "amount", "fee", "balance"],
+          "type": "ledger",
+          "description": "Kraken ledger export"
+        }
+      ]
+    },
+    "coinbase": {
+      "source": "Coinbase / Coinbase Pro",
+      "regions": ["Global", "US"],
+      "examples": [
+        {
+          "headers": ["Timestamp", "Transaction Type", "Asset", "Quantity Transacted", "Spot Price Currency", "Spot Price at Transaction", "Subtotal", "Total (inclusive of fees and/or spread)", "Fees and/or Spread", "Notes"],
+          "type": "transaction",
+          "description": "Coinbase transaction history"
+        },
+        {
+          "headers": ["portfolio", "type", "time", "amount", "balance", "price"],
+          "type": "activity",
+          "description": "Coinbase Pro portfolio activity"
+        }
+      ]
+    },
+    "gemini": {
+      "source": "Gemini",
+      "regions": ["Global", "US"],
+      "examples": [
+        {
+          "headers": ["time", "base-asset", "quote-asset", "type", "description", "price", "quantity", "total", "fee", "fee-currency", "trade-id"],
+          "type": "trade",
+          "description": "Gemini trade history"
+        }
+      ]
+    },
+    "koinly": {
+      "source": "Koinly Universal Format",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Date", "Type", "Tag", "From Wallet ID", "From Amount", "From Currency", "To Wallet ID", "To Amount", "To Currency", "Fee Amount", "Fee Currency", "Description"],
+          "type": "universal",
+          "description": "Koinly universal format (supports all transaction types)"
+        }
+      ]
+    },
+    "kucoin": {
+      "source": "KuCoin",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["tradeCreatedAt", "pair", "side", "price", "amount", "total", "fee", "feeCurrency"],
+          "type": "trade",
+          "description": "KuCoin trade history"
+        },
+        {
+          "headers": ["Time", "Type", "Currency", "Amount", "Status", "Remarks"],
+          "type": "deposit_withdrawal",
+          "description": "KuCoin deposit/withdrawal history"
+        }
+      ]
+    },
+    "poloniex": {
+      "source": "Poloniex",
+      "regions": ["Global", "US"],
+      "examples": [
+        {
+          "headers": ["Date", "Type", "Currency", "Amount", "Balance", "Status", "Comment"],
+          "type": "activity",
+          "description": "Poloniex activity history"
+        }
+      ]
+    },
+    "etherscan": {
+      "source": "Etherscan / Blockchain Explorer",
+      "regions": ["Ethereum", "EVM Chains"],
+      "examples": [
+        {
+          "headers": ["Timestamp", "Txhash", "BlockNumber", "Method", "From", "To", "Value_IN(ETH)", "Value_OUT(ETH)", "ContractAddress", "Gas_UsedGasPrice", "IsError", "TxnFee(ETH)"],
+          "type": "blockchain",
+          "description": "Etherscan blockchain transaction export"
+        }
+      ]
+    },
+    "cointracking": {
+      "source": "CoinTracking",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Type", "Buy Amount", "Buy Currency", "Sell Amount", "Sell Currency", "Fee", "Fee Currency", "Exchange", "Trade-Group", "Comment", "Date"],
+          "type": "trade",
+          "description": "CoinTracking export format"
+        }
+      ]
+    },
+    "bybit": {
+      "source": "Bybit",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["created_at", "symbol", "side", "type", "price", "qty", "total", "fee", "fee_coin"],
+          "type": "trade",
+          "description": "Bybit trade history"
+        },
+        {
+          "headers": ["Time", "Coin", "Amount", "Status", "Wallet", "Remarks"],
+          "type": "deposit_withdrawal",
+          "description": "Bybit deposit/withdrawal history"
+        }
+      ]
+    },
+    "okex": {
+      "source": "OKX / OKEx",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["time", "product_id", "side", "price", "amount", "total", "fee", "fee_currency"],
+          "type": "trade",
+          "description": "OKX trade history"
+        },
+        {
+          "headers": ["timestamp", "txid", "currency", "amount", "fee", "status"],
+          "type": "deposit_withdrawal",
+          "description": "OKX deposit/withdrawal"
+        }
+      ]
+    },
+    "bitfinex": {
+      "source": "Bitfinex",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["#", "PAIR", "EXEC DATE", "EXEC TIME", "BUY/SELL", "PRICE", "AMOUNT", "FEE", "FEE PERC.", "ORDER ID", "TOTAL"],
+          "type": "trade",
+          "description": "Bitfinex trade history"
+        }
+      ]
+    },
+    "huobi": {
+      "source": "Huobi Global",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Order ID", "Symbol", "Type", "Side", "Price", "Amount", "Total", "Fee", "Fee Currency", "Executed Time"],
+          "type": "trade",
+          "description": "Huobi trade history"
+        }
+      ]
+    },
+    "nexo": {
+      "source": "Nexo",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Date", "Transaction", "Input Currency", "Input Amount", "Output Currency", "Output Amount", "USD Value"],
+          "type": "lending",
+          "description": "Nexo deposit, withdrawal, and interest"
+        }
+      ]
+    },
+    "celsius": {
+      "source": "Celsius Network",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Date", "Transaction", "Currency", "Amount", "Status", "Balance"],
+          "type": "lending",
+          "description": "Celsius transaction history"
+        }
+      ]
+    },
+    "blockfi": {
+      "source": "BlockFi",
+      "regions": ["US"],
+      "examples": [
+        {
+          "headers": ["Transacted", "Transaction", "Confirmed Date", "Amount", "Currency", "Net Amount", "Transaction Fee", "Quote"],
+          "type": "lending",
+          "description": "BlockFi transaction history"
+        }
+      ]
+    },
+    "ledger_live": {
+      "source": "Ledger Live",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Operation Date", "Currency", "Operationtype", "Amount", "Fee", "Hash"],
+          "type": "wallet",
+          "description": "Ledger Live export"
+        }
+      ]
+    },
+    "trezor": {
+      "source": "Trezor Suite",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Date", "Time", "Address", "TxID", "Type", "Amount"],
+          "type": "wallet",
+          "description": "Trezor Suite transaction export"
+        }
+      ]
+    },
+    "crypto_com": {
+      "source": "Crypto.com App",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Timestamp (UTC)", "Transaction Description", "Currency", "Amount", "To Currency", "To Amount", "Native Currency", "Native Amount", "Native Amount (in USD)", "Transaction Kind", "Status"],
+          "type": "transaction",
+          "description": "Crypto.com transaction history"
+        }
+      ]
+    },
+    "bitcoin_tax": {
+      "source": "Bitcoin.tax",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["type", "buy_amount", "buy_currency", "sell_amount", "sell_currency", "fee_amount", "fee_currency", "exchange", "trade_group", "comment", "date"],
+          "type": "trade",
+          "description": "Bitcoin.tax CSV format"
+        }
+      ]
+    },
+    "rotki": {
+      "source": "Rotki",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Location", "Spend Currency", "Spend Amount", "Receive Currency", "Receive Amount", "Fee", "Fee Currency", "Description", "Timestamp"],
+          "type": "trade",
+          "description": "Rotki trade format"
+        },
+        {
+          "headers": ["Type", "Location", "Currency", "Amount", "Fee", "Fee Currency", "Description", "Timestamp"],
+          "type": "event",
+          "description": "Rotki event format (Deposit, Withdrawal, Income, etc.)"
+        }
+      ]
+    },
+    "blockpit": {
+      "source": "Blockpit",
+      "regions": ["Global"],
+      "examples": [
+        {
+          "headers": ["Date (UTC)", "Integration Name", "Label", "Outgoing Asset", "Outgoing Amount", "Incoming Asset", "Incoming Amount", "Fee Asset", "Fee Amount", "Trx. ID", "Comments"],
+          "type": "universal",
+          "description": "Blockpit CSV template"
+        }
+      ]
+    },
+    "uniswap": {
+      "source": "Uniswap (via Etherscan)",
+      "regions": ["Ethereum", "Layer 2s"],
+      "examples": [
+        {
+          "headers": ["Timestamp", "Txhash", "Method", "From", "To", "Token In", "Amount In", "Token Out", "Amount Out", "Fee", "Status"],
+          "type": "dex",
+          "description": "Uniswap swap history (via Etherscan)"
+        }
+      ]
+    },
+    "curve": {
+      "source": "Curve Finance",
+      "regions": ["Ethereum", "Multi-chain"],
+      "examples": [
+        {
+          "headers": ["Date", "Type", "Pair", "Amount", "Price", "Fee", "Status", "Hash"],
+          "type": "defi",
+          "description": "Curve transaction history"
+        }
+      ]
+    }
+  },
+  "standard_format": {
+    "description": "Standard normalized format for all transactions",
+    "fields": {
+      "timestamp": "Transaction date/time (ISO 8601)",
+      "transaction_id": "Unique transaction identifier",
+      "transaction_type": "Type of transaction (buy, sell, deposit, withdrawal, transfer, fee, staking, etc.)",
+      "from_amount": "Amount sent/spent",
+      "from_currency": "Currency sent (BTC, ETH, USD, etc.)",
+      "to_amount": "Amount received",
+      "to_currency": "Currency received",
+      "fee_amount": "Transaction fee amount",
+      "fee_currency": "Currency of fee",
+      "price": "Price per unit (if applicable)",
+      "price_currency": "Currency of price",
+      "description": "Transaction description/notes",
+      "exchange": "Source exchange/wallet",
+      "wallet_address": "Wallet address (for deposits/withdrawals)",
+      "status": "Transaction status (confirmed, pending, failed)"
+    }
+  },
+  "column_patterns": {
+    "timestamp": {
+      "patterns": ["date", "time", "timestamp", "created", "tradeCreatedAt", "txTime", "block time", "created_at", "exec time", "execdate", "operation date", "transacted"],
+      "variations": ["Date", "Time", "Timestamp", "Created At", "Trade Created At", "Transaction Time", "Created_At", "Exec Time", "ExecDate", "Operation Date", "Transacted"],
+      "description": "When the transaction occurred"
+    },
+    "transaction_id": {
+      "patterns": ["id", "txid", "tx_id", "transaction_id", "trade_id", "hash", "txhash", "reference", "order_id", "ordid"],
+      "variations": ["ID", "TxID", "Tx ID", "Transaction ID", "Trade ID", "Hash", "Txhash", "Order ID", "OrdID"],
+      "description": "Unique identifier for the transaction"
+    },
+    "from_amount": {
+      "patterns": ["amount", "quantity", "qty", "size", "sell amount", "send amount", "buy_amount", "exec_amount", "input_amount"],
+      "variations": ["Amount", "Quantity", "Qty", "Size", "Sell Amount", "Send Amount", "Buy Amount", "Exec Amount", "Input Amount"],
+      "description": "Amount sent/spent"
+    },
+    "to_amount": {
+      "patterns": ["total", "received", "buy amount", "receive amount", "output_amount", "output_qty"],
+      "variations": ["Total", "Received", "Buy Amount", "Receive Amount", "Output Amount", "Output Qty"],
+      "description": "Amount received"
+    },
+    "from_currency": {
+      "patterns": ["currency", "coin", "asset", "symbol", "base-asset", "sell currency", "send currency", "buy_currency", "pair", "input_currency"],
+      "variations": ["Currency", "Coin", "Asset", "Symbol", "Base-Asset", "Sell Currency", "Send Currency", "Buy Currency", "Pair", "Input Currency"],
+      "description": "Currency sent"
+    },
+    "to_currency": {
+      "patterns": ["quote-asset", "buy currency", "receive currency", "to currency", "output_currency", "output_asset"],
+      "variations": ["Quote-Asset", "Buy Currency", "Receive Currency", "To Currency", "Output Currency", "Output Asset"],
+      "description": "Currency received"
+    },
+    "price": {
+      "patterns": ["price", "rate", "spot_price", "cost", "executed_price", "trade_price"],
+      "variations": ["Price", "Rate", "Spot Price", "Cost", "Executed Price", "Trade Price"],
+      "description": "Price per unit of currency"
+    },
+    "price_currency": {
+      "patterns": ["price currency", "price_currency", "quote_currency"],
+      "variations": ["Price Currency", "Price_Currency", "Quote Currency"],
+      "description": "Currency of the price"
+    },
+    "fee_amount": {
+      "patterns": ["fee", "fees", "commission", "fee_amount", "trading_fee", "transaction_fee"],
+      "variations": ["Fee", "Fees", "Commission", "Fee Amount", "Trading Fee", "Transaction Fee"],
+      "description": "Transaction fees or commissions"
+    },
+    "fee_currency": {
+      "patterns": ["fee currency", "fee_currency", "fee_coin"],
+      "variations": ["Fee Currency", "Fee_Currency", "Fee Coin"],
+      "description": "Currency of the fee"
+    },
+    "transaction_type": {
+      "patterns": ["type", "transaction_type", "trx_type", "method", "side", "operation_type", "kind", "operationtype"],
+      "variations": ["Type", "Transaction Type", "Trx Type", "Method", "Side", "Operation Type", "Kind", "OperationType"],
+      "description": "Type of transaction (buy, sell, deposit, etc.)"
+    },
+    "balance": {
+      "patterns": ["balance", "running_balance", "balance_after", "balance_amount"],
+      "variations": ["Balance", "Running Balance", "Balance After", "Balance Amount"],
+      "description": "Account balance after transaction"
+    },
+    "description": {
+      "patterns": ["description", "notes", "comment", "memo", "remark", "remarks"],
+      "variations": ["Description", "Notes", "Comment", "Memo", "Remark", "Remarks"],
+      "description": "Additional details about the transaction"
+    },
+    "exchange": {
+      "patterns": ["exchange", "source", "exchange_name", "location", "platform"],
+      "variations": ["Exchange", "Source", "Exchange Name", "Location", "Platform"],
+      "description": "Source exchange or platform"
+    },
+    "wallet_address": {
+      "patterns": ["address", "wallet", "wallet_address", "from", "to", "contract_address", "wallet_id"],
+      "variations": ["Address", "Wallet", "Wallet Address", "From", "To", "Contract Address", "Wallet ID"],
+      "description": "Wallet or public address"
+    },
+    "status": {
+      "patterns": ["status", "state", "confirmed", "transaction_status"],
+      "variations": ["Status", "State", "Confirmed", "Transaction Status"],
+      "description": "Transaction status"
+    },
+    "unknown": {
+      "patterns": [],
+      "variations": [],
+      "description": "Unknown or unmatched column"
+    }
+  },
+  "transaction_types": {
+    "buy": ["buy", "purchase", "bid", "long", "enter", "purchased", "buying"],
+    "sell": ["sell", "sale", "ask", "short", "exit", "sold", "selling"],
+    "deposit": ["deposit", "in", "receive", "received", "incoming", "withdrawal_receive"],
+    "withdrawal": ["withdrawal", "withdraw", "out", "send", "sent", "outgoing"],
+    "transfer": ["transfer", "move", "swap", "exchange", "convert"],
+    "fee": ["fee", "commission", "spread", "trading_fee"],
+    "staking": ["staking", "stake", "earn", "yield"],
+    "reward": ["reward", "bonus", "airdrop", "referral", "incentive"],
+    "interest": ["interest", "yield", "interest_income"],
+    "mining": ["mining", "mined", "mining_reward"],
+    "fork": ["fork", "fork reward"],
+    "rebate": ["rebate", "cashback"],
+    "liquidation": ["liquidation", "liquidated"],
+    "margin_call": ["margin call", "margin_call"],
+    "borrow": ["borrow", "borrowed", "borrowing"],
+    "repay": ["repay", "repayment", "repaid"],
+    "income": ["income", "earning", "earned"]
+  },
+  "exchange_hints": {
+    "binance": ["base-asset", "quote-asset", "trade-id", "tradeId"],
+    "kraken": ["txid", "refid", "aclass"],
+    "coinbase": ["Spot Price Currency", "Spot Price at Transaction"],
+    "gemini": ["base-asset", "quote-asset"],
+    "koinly": ["From Wallet ID", "To Wallet ID"],
+    "kucoin": ["tradeCreatedAt", "feeCurrency"],
+    "poloniex": ["Comment"],
+    "etherscan": ["Txhash", "BlockNumber", "Gas_UsedGasPrice"],
+    "cointracking": ["Trade-Group"],
+    "bybit": ["created_at"],
+    "okex": ["product_id"],
+    "bitfinex": ["EXEC DATE", "EXEC TIME"],
+    "huobi": ["Symbol"],
+    "nexo": ["Input Currency"],
+    "celsius": ["Transaction"],
+    "blockfi": ["Transaction Fee"],
+    "ledger": ["OperationType"],
+    "trezor": ["TxID"],
+    "crypto_com": ["Transaction Kind"],
+    "bitcoin_tax": ["trade_group"],
+    "rotki": ["Location"],
+    "blockpit": ["Integration Name"],
+    "uniswap": ["Method"],
+    "curve": ["Pair"]
+  }
+}
