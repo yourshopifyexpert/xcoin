@@ -1,0 +1,144 @@
+{
+  "agents": [
+    {
+      "id": "backend-architecture-expert",
+      "name": "Backend Architecture Expert",
+      "domain": "Backend Infrastructure & System Design",
+      "documentation": "01-backend-architecture-expert.md",
+      "sourceRepo": "https://github.com/yourshopifyexpert/ccodetax",
+      "sourceMD": "001-backend-architecture-setup.md",
+      "expertise": [
+        "System architecture and infrastructure design",
+        "Backend framework selection and setup",
+        "Database schema design and optimization",
+        "API design and RESTful conventions",
+        "Microservices architecture patterns",
+        "Deployment and DevOps considerations",
+        "Cloud infrastructure (AWS, GCP, Azure)",
+        "Containerization and orchestration (Docker, Kubernetes)",
+        "CI/CD pipeline setup",
+        "Infrastructure as Code (Terraform, CloudFormation)"
+      ],
+      "integrations": [
+        "csv-import-engine-expert",
+        "tax-calculation-engine-expert",
+        "exchange-api-integration-expert"
+      ],
+      "successMetrics": {
+        "calculationAccuracy": "100% for standard cases",
+        "scalability": "10,000+ concurrent users",
+        "apiResponseTime": "< 100ms",
+        "uptime": "99.9%",
+        "securityVulnerabilities": "Zero critical"
+      }
+    },
+    {
+      "id": "csv-import-engine-expert",
+      "name": "CSV Import Engine Expert",
+      "domain": "Data Ingestion & File Processing",
+      "documentation": "02-csv-import-engine-expert.md",
+      "sourceRepo": "https://github.com/yourshopifyexpert/ccodetax",
+      "sourceMD": "002-csv-import-engine.md",
+      "expertise": [
+        "CSV parsing and validation",
+        "Data normalization and transformation",
+        "Bulk data import optimization",
+        "Error handling and recovery",
+        "Data quality assurance",
+        "Performance optimization for large datasets",
+        "Memory-efficient streaming",
+        "Duplicate detection and handling",
+        "Data mapping and transformation pipelines",
+        "Batch processing and scheduling"
+      ],
+      "integrations": [
+        "backend-architecture-expert",
+        "tax-calculation-engine-expert",
+        "exchange-api-integration-expert"
+      ],
+      "successMetrics": {
+        "fileSizeCapacity": "100MB+ in < 5 minutes",
+        "dataLoss": "Zero on failures",
+        "retryMechanism": "Automatic on transient errors",
+        "validationSuccess": "> 99%",
+        "memoryUsage": "< 500MB",
+        "rowCapacity": "50+ million row batches"
+      }
+    },
+    {
+      "id": "tax-calculation-engine-expert",
+      "name": "Tax Calculation Engine Expert",
+      "domain": "Tax Computation & Compliance",
+      "documentation": "03-tax-calculation-engine-expert.md",
+      "sourceRepo": "https://github.com/yourshopifyexpert/ccodetax",
+      "sourceMD": "003-tax-calculation-engine.md",
+      "expertise": [
+        "Tax calculation algorithms",
+        "Capital gains and losses computation",
+        "Tax liability determination",
+        "Multi-jurisdiction tax rules",
+        "Cryptocurrency tax treatment",
+        "Trading strategy impact analysis",
+        "Tax bracket calculations",
+        "Deduction and credit optimization",
+        "Reporting accuracy and compliance",
+        "Audit trail and documentation"
+      ],
+      "integrations": [
+        "backend-architecture-expert",
+        "csv-import-engine-expert",
+        "exchange-api-integration-expert"
+      ],
+      "successMetrics": {
+        "calculationAccuracy": "100% for standard cases",
+        "jurisdictionSupport": "20+ jurisdictions",
+        "transactionVolume": "10,000+ transactions",
+        "calculationSpeed": "< 2 seconds per tax year",
+        "regulatoryCompliance": "IRS, HMRC, EU standards",
+        "reportAccuracy": "Zero errors"
+      }
+    },
+    {
+      "id": "exchange-api-integration-expert",
+      "name": "Exchange API Integration Expert",
+      "domain": "External API Integration & Market Data",
+      "documentation": "04-exchange-api-integration-expert.md",
+      "sourceRepo": "https://github.com/yourshopifyexpert/ccodetax",
+      "sourceMD": "004-exchange-api-integrations.md",
+      "expertise": [
+        "Cryptocurrency exchange API integration",
+        "REST and WebSocket protocols",
+        "API rate limiting and throttling",
+        "Authentication and key management",
+        "Real-time market data streaming",
+        "Historical data retrieval",
+        "Price aggregation and normalization",
+        "Error handling and API fallbacks",
+        "Data synchronization and caching",
+        "Exchange-specific quirks and workarounds"
+      ],
+      "integrations": [
+        "backend-architecture-expert",
+        "csv-import-engine-expert",
+        "tax-calculation-engine-expert"
+      ],
+      "successMetrics": {
+        "exchangeSupport": "10+ major exchanges",
+        "apiAvailability": "99.9%",
+        "dataLatency": "< 100ms",
+        "authenticationFailures": "Zero",
+        "gracefulFallback": "When exchange is down",
+        "concurrentConnections": "100+",
+        "dataReconciliation": "Accurate historical data"
+      }
+    }
+  ],
+  "metadata": {
+    "created": "2025-11-19",
+    "version": "1.0",
+    "project": "xcoin",
+    "sourceProject": "ccodetax",
+    "sourceRepo": "https://github.com/yourshopifyexpert/ccodetax",
+    "purpose": "Specialized markdown agents for ccodetax documentation"
+  }
+}
